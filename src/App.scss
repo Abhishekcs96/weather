@@ -1,0 +1,237 @@
+@mixin date-time2 {
+  font-size: 15px;
+  font-weight: 200;
+}
+@mixin date-time {
+  font-size: 25px;
+  font-weight: 200;
+}
+@mixin box-content {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  font-weight: 100;
+}
+@mixin box-content2 {
+  padding: 10px;
+  font-weight: 100;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+}
+
+.container {
+  padding: 20px 70px;
+  color: #fff;
+}
+
+.current-info {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  .first-container {
+    .time-container {
+      @include date-time;
+
+      #following {
+        margin-left: 15px;
+      }
+    }
+
+    .date-container {
+      @include date-time;
+    }
+
+    .weather-container {
+      display: flex;
+      flex-direction: column;
+      flex: auto;
+      justify-content: space-between;
+      border: 2px solid #fff;
+      border-radius: 5px;
+      background-color: transparentize($color: #0f0f0f, $amount: 0.5);
+
+      .temp {
+        @include box-content;
+
+        .temp1 {
+          font-weight: 100;
+        }
+      }
+
+      .humidity {
+        @include box-content;
+
+        .humidity1 {
+          font-weight: 100;
+        }
+      }
+
+      .pressure {
+        @include box-content;
+
+        .pressure1 {
+          font-weight: 100;
+        }
+      }
+      .sunrise {
+        @include box-content;
+
+        .sunrise1 {
+          font-weight: 100;
+        }
+      }
+      .sunset {
+        @include box-content;
+
+        .sunset1 {
+          font-weight: 100;
+        }
+      }
+    }
+  }
+  .place-info {
+    text-align: end;
+    font-weight: 100;
+    font-size: 1rem;
+  }
+}
+
+.future-forecast {
+  display: flex;
+  box-sizing: border-box;
+  justify-content: flex-start;
+  align-items: center;
+  margin-left: -70px;
+  width: 100%;
+  padding: 25px;
+  position: fixed;
+  bottom: 0;
+  background-color: transparentize($color: #0f0f0f, $amount: 0.3);
+
+  .today {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .temp-day,
+    .temp-night {
+      text-align: center;
+      font-size: 10px;
+      padding-top: 15px;
+    }
+
+    .day {
+      padding: 0 15px;
+      background: transparentize($color: #000000, $amount: 0.4);
+      border-radius: 15px;
+    }
+  }
+
+  .weather-forecast {
+    display: flex;
+    margin: 0 50px;
+
+    .item1 {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid #fff;
+      border-radius: 10px;
+      padding: 0 15px;
+      margin-left: 30px;
+
+      .day {
+        padding: 0 5px;
+        background: transparentize($color: #000000, $amount: 0.4);
+        border-radius: 15px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .container {
+    padding: 20px;
+  }
+  .future-forecast {
+    overflow: auto;
+    margin-left: -20px;
+    margin-top: 10px;
+    .today {
+      .temp-day,
+      .temp-night,
+      .day {
+        font-size: 10px;
+      }
+      .icon1 {
+        width: 75%;
+      }
+    }
+    .weather-forecast {
+      font-size: 10px;
+      .item1 {
+        .icon1 {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .place-info {
+    text-align: end;
+  }
+
+  .current-info {
+    .first-container {
+      .time-container {
+        @include date-time2;
+
+        #following {
+          margin-left: 15px;
+        }
+      }
+
+      .date-container {
+        @include date-time2;
+      }
+      .weather-container {
+        margin-top: 15px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .container {
+    display: flex;
+
+    .current-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-left: 27%;
+      text-align: center;
+      margin-top: 3%;
+
+      .place-info {
+        .city {
+          margin-top: 10px;
+          text-align: center;
+          font-weight: 400;
+        }
+      }
+    }
+  }
+}
