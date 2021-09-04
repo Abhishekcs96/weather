@@ -135,7 +135,7 @@ const Search = ({ base }) => {
                       Sunrise :{" "}
                       <div className="sunrise1">
                         {moment(Weather.current.sunrise * 1000).format(
-                          "HH:mm a"
+                          "HH:mm: a"
                         )}
                       </div>
                     </div>
