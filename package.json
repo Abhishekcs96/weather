@@ -1,5 +1,4 @@
-{ "homepage": "http://Abhishekcs96.github.io/weather",
-  "name": "weather",
+{ "name": "weather",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
