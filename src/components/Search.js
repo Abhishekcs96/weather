@@ -3,7 +3,6 @@ import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
 import { useState } from "react";
 import "./Search.scss";
-import moment from "moment";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -52,6 +51,55 @@ const useStyles = makeStyles((theme) =>
 const key = "93f8dbfd938dc05678649e36af7757a2";
 
 const Search = ({ base }) => {
+  //convert timezone_offset returned from api call, Accurate date based on timezone/location of client and not bound to local machine date object.
+  const timeconverter = (num) => {
+    let date = new Date();
+    console.log(date);
+    let utctime = date.getTime() + date.getTimezoneOffset() * 60 * 1000;
+    console.log(utctime);
+    let correcttime = utctime + num * 1000;
+    console.log(correcttime);
+    let correctdate = new Date(correcttime);
+    console.log(correctdate);
+    let stringtime = correctdate.toDateString();
+    console.log(stringtime);
+    return stringtime;
+  };
+
+  //function to get day name, kinda redundant function, will work on improvisations.
+  const dayview = (dt, num) => {
+    const datesec = dt * 1000;
+    let date1 = new Date(datesec);
+    console.log(date1.toLocaleString());
+    let utctime = date1.getTime() + date1.getTimezoneOffset() * 60 * 1000;
+    console.log(utctime);
+    let correcttime = utctime + num * 1000;
+    console.log(correcttime);
+    let correctdate = new Date(correcttime);
+    console.log(correctdate);
+    let stringtime = correctdate.toDateString().slice(0, 3);
+    console.log(stringtime);
+    return stringtime;
+  };
+
+  //convert sunrise and sunset unix timesets to utc then use timezone offset to calculate sunrise/set values from utc to client location timezone.
+  const converttoUTC = (num, offset) => {
+    console.log(num);
+    console.log(offset);
+    let sunrise = new Date();
+    let sun = sunrise.getTimezoneOffset() * 60 * 1000;
+    console.log(sunrise.getTimezoneOffset() * 60 * 1000);
+    let calc = num + sun;
+    let utcsun = new Date(calc);
+    console.log(utcsun.toLocaleString());
+    console.log(calc);
+    let realsuntime = calc + offset * 1000;
+    let realsunrise = new Date(realsuntime);
+    let stringtime = realsunrise.toLocaleString().slice(11, 22);
+    console.log(stringtime);
+    return stringtime;
+  };
+
   //start of component description
   const [Place, setPlace] = useState("");
   const [Weather, setWeather] = useState({});
@@ -103,7 +151,7 @@ const Search = ({ base }) => {
             <div className="current-info">
               <div className="first-container">
                 <div className="time-container">
-                  {moment(Weather.current.dt * 1000).format("LL")}
+                  {timeconverter(Weather.timezone_offset)}
                 </div>
 
                 <div className="date-container"></div>
@@ -126,8 +174,9 @@ const Search = ({ base }) => {
                   <div className="sunrise">
                     Sunrise :{" "}
                     <div className="sunrise1">
-                      {moment(Weather.current.sunrise * 1000).format(
-                        "HH:mm: a"
+                      {converttoUTC(
+                        Weather.current.sunrise * 1000,
+                        Weather.timezone_offset
                       )}
                     </div>
                   </div>
@@ -135,7 +184,10 @@ const Search = ({ base }) => {
                   <div className="sunset">
                     Sunset :{" "}
                     <div className="sunset1">
-                      {moment(Weather.current.sunset * 1000).format("HH:mm: a")}
+                      {converttoUTC(
+                        Weather.current.sunset * 1000,
+                        Weather.timezone_offset
+                      )}
                     </div>
                   </div>
                 </div>
@@ -149,9 +201,7 @@ const Search = ({ base }) => {
 
             <div className="future-forecast">
               <div className="today">
-                <div className="day">
-                  {moment(Weather.current.dt * 1000).format("ddd")}
-                </div>
+                <div className="day">Today</div>
                 <img
                   src={`http://openweathermap.org/img/wn/${Weather.daily[0].weather[0].icon}@2x.png`}
                   alt="weather-display"
@@ -168,7 +218,7 @@ const Search = ({ base }) => {
               <div className="weather-forecast">
                 <div className="item1">
                   <div className="day">
-                    {moment(Weather.daily[1].dt * 1000).format("ddd")}
+                    {dayview(Weather.daily[1].dt, Weather.timezone_offset)}
                   </div>
                   <img
                     src={`http://openweathermap.org/img/wn/${Weather.daily[1].weather[0].icon}@2x.png`}
@@ -184,7 +234,7 @@ const Search = ({ base }) => {
                 </div>
                 <div className="item1">
                   <div className="day">
-                    {moment(Weather.daily[2].dt * 1000).format("ddd")}
+                    {dayview(Weather.daily[2].dt, Weather.timezone_offset)}
                   </div>
                   <img
                     src={`http://openweathermap.org/img/wn/${Weather.daily[2].weather[0].icon}@2x.png`}
@@ -200,7 +250,7 @@ const Search = ({ base }) => {
                 </div>
                 <div className="item1">
                   <div className="day">
-                    {moment(Weather.daily[3].dt * 1000).format("ddd")}
+                    {dayview(Weather.daily[3].dt, Weather.timezone_offset)}
                   </div>
                   <img
                     src={`http://openweathermap.org/img/wn/${Weather.daily[3].weather[0].icon}@2x.png`}
@@ -216,7 +266,7 @@ const Search = ({ base }) => {
                 </div>
                 <div className="item1">
                   <div className="day">
-                    {moment(Weather.daily[4].dt * 1000).format("ddd")}
+                    {dayview(Weather.daily[4].dt, Weather.timezone_offset)}
                   </div>
                   <img
                     src={`http://openweathermap.org/img/wn/${Weather.daily[4].weather[0].icon}@2x.png`}
@@ -233,7 +283,7 @@ const Search = ({ base }) => {
 
                 <div className="item1">
                   <div className="day">
-                    {moment(Weather.daily[5].dt * 1000).format("ddd")}
+                    {dayview(Weather.daily[5].dt, Weather.timezone_offset)}
                   </div>
                   <img
                     src={`http://openweathermap.org/img/wn/${Weather.daily[5].weather[0].icon}@2x.png`}
@@ -250,7 +300,7 @@ const Search = ({ base }) => {
 
                 <div className="item1">
                   <div className="day">
-                    {moment(Weather.daily[6].dt * 1000).format("ddd")}
+                    {dayview(Weather.daily[6].dt, Weather.timezone_offset)}
                   </div>
                   <img
                     src={`http://openweathermap.org/img/wn/${Weather.daily[6].weather[0].icon}@2x.png`}
