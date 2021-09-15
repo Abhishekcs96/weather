@@ -54,15 +54,10 @@ const Search = ({ base }) => {
   //convert timezone_offset returned from api call, Accurate date based on timezone/location of client and not bound to local machine date object.
   const timeconverter = (num) => {
     let date = new Date();
-    console.log(date);
     let utctime = date.getTime() + date.getTimezoneOffset() * 60 * 1000;
-    console.log(utctime);
     let correcttime = utctime + num * 1000;
-    console.log(correcttime);
     let correctdate = new Date(correcttime);
-    console.log(correctdate);
     let stringtime = correctdate.toDateString();
-    console.log(stringtime);
     return stringtime;
   };
 
@@ -70,33 +65,22 @@ const Search = ({ base }) => {
   const dayview = (dt, num) => {
     const datesec = dt * 1000;
     let date1 = new Date(datesec);
-    console.log(date1.toLocaleString());
     let utctime = date1.getTime() + date1.getTimezoneOffset() * 60 * 1000;
-    console.log(utctime);
     let correcttime = utctime + num * 1000;
-    console.log(correcttime);
     let correctdate = new Date(correcttime);
-    console.log(correctdate);
     let stringtime = correctdate.toDateString().slice(0, 3);
-    console.log(stringtime);
     return stringtime;
   };
 
   //convert sunrise and sunset unix timesets to utc then use timezone offset to calculate sunrise/set values from utc to client location timezone.
   const converttoUTC = (num, offset) => {
-    console.log(num);
-    console.log(offset);
     let sunrise = new Date();
     let sun = sunrise.getTimezoneOffset() * 60 * 1000;
-    console.log(sunrise.getTimezoneOffset() * 60 * 1000);
     let calc = num + sun;
     let utcsun = new Date(calc);
-    console.log(utcsun.toLocaleString());
-    console.log(calc);
     let realsuntime = calc + offset * 1000;
     let realsunrise = new Date(realsuntime);
     let stringtime = realsunrise.toLocaleString().slice(11, 22);
-    console.log(stringtime);
     return stringtime;
   };
 
