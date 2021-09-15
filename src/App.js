@@ -17,9 +17,9 @@ function App() {
       textAlign: 'center',
       justifyContent: 'start',
       alignItems:'center',
+      
 
        },
-    
   }))
   const classes = useStyle();
   return(
@@ -30,11 +30,11 @@ function App() {
           <Toolbar>
             
           <WiDaySunny/>
-             <Typography variant = "h6" className = {classes.text.justifyContent}  > Weather Check!- A simple weather check app</Typography>
+             <Typography variant = "h4"> WEATHER CHECK</Typography>
             
               </Toolbar>
                     </AppBar>
-                    <Search  base = 'https://api.openweathermap.org/data/2.5/'/>
+                    <Search base = 'https://api.openweathermap.org/data/2.5/'/>
                     
                    
             
