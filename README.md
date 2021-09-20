@@ -1,3 +1,7 @@
+This application was built using ReactJS and uses SASS CSS for styling.
+Users can search for a location and weather-relevant data will be returned for the next 7 days.
+Uses openweathermap api to fetch data.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
